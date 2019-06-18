@@ -1,0 +1,62 @@
+! BioCGT processes file
+! *********************
+! properties of processes:
+! name=           fortran variable name for the rate
+! description=    e.g. "grazing of zooplankton"
+! turnover=       fortran formula for calculating the process turnover [mol/kg or mol/m2]
+! equation=       equation which, like a chemical equation, lists reaction agents and products of this process.
+!                   example: t_no3 + 1/16*t_po4 -> t_lpp
+!                   tracers to the left of the "->" are consumed, tracers to the right of the "->" are produced by this process.
+! feedingEfficiency= name of an auxiliary variable (values 0..1) which tells how much of the food in a certain depth is accessible for the predator with vertLoc=FIS. Relevant for vertLoc=FIS only. Default="1.0"
+! isActive=       1=active (default); 0=process is switched off
+! isOutput=       1=occurs as output in model results; 0=internal use only (default)
+! limitation=     TYPE tracer > value else otherProcess
+! limitation=     TYPE tracer < value else otherProcess
+!                   TYPE = HARD (theta function), MM (Michaelis-Menten), MMQ (quadratic Michaelis-Menten), IV (Ivlev), IVQ (quadratic Ivlev), LIN (linear), TANH (tangens hyperbolicus)
+!                   tracer = name of tracer that needs to be present
+!                   value = value that needs to be exceeded, may also be a constant or auxiliary
+!                   otherProcess = process that takes place instead if this process gets hampered by the availability of "tracer"
+!                 several of these lines may exist, the order of them may be relevant for the rate of "otherProcess".
+! processType=    type of process, e.g. "propagation", default="standard"
+! repaint=        number n of repainting actions to be done by the process, default=0
+!                 This line is followed by n lines of this kind:
+!   <oldColor> <element> = <newColor>    e.g.: "all  N   = blue "
+!                                              "blue P   = none "
+!                                              "red  all = green"
+! vertLoc=        WAT=z-dependent (default), SED=in the sediment only, SUR=in the surface only, FIS=fish-type behaviour
+! comment=        comment, default=""
+!
+! Process rates are calculated in the given order.
+! *************************************************************************************
+name        = p_import_din
+description = Import of DIN in water pumped from Kiel Fjord [mol N m-3 d-1]
+turnover    = din_ext*(flow_rate/box_vol)
+comment     = open-circuit mode of KOBs, flow-through of natural seawater pumped from Kiel Fjord at 1 m water depth
+equation    =  -> t_din
+isOutput    = 1
+***********************
+name        = p_export_din
+description = Export of DIN pumped back to Kiel Fjord [mol N m-3 d-1]
+turnover    = t_din*(flow_rate/box_vol)
+comment     = open-circuit mode of KOBs, flow-through of natural seawater pumped from Kiel Fjord at 1 m water depth
+equation    = t_din -> 
+isOutput    = 1
+***********************
+name        = p_din_assim_fuc
+description = Fucus DIN assimilation for growth [mol N m-3 d-1]
+turnover    = mu_fuc*phi_temp_fuc*phi_din_fuc*t_fuc
+equation    = t_din -> t_fuc
+isOutput    = 1
+***********************
+name        = p_fuc_graz_gam
+description = Gammarus-grazing on Fucus [mol N m-3 d-1]
+turnover    = gam_abun*fuc_graz_gam_0*phi_temp_graz_gam
+equation    = t_fuc -> t_din
+isOutput    = 1
+***********************
+name        = p_fuc_resp_din
+description = Fucus DIN respiration [mol N m-3 d-1]
+turnover    = resp_temp_fuc*t_fuc
+equation    = t_fuc -> t_din
+isOutput    = 1
+***********************

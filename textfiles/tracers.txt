@@ -1,0 +1,55 @@
+! BioCGT Tracers file
+! *******************
+! properties of Tracers:
+! name=           variable name in the code
+! description=    e.g. "flaggelates"
+! atmosDep=       0=no atmospheric depositon of this tracer (default), 1=atmospheric deposition of this tracer
+! childOf=        e.g. "flaggelates" for "red_N_in_flaggelates", default="none"
+! contents=       number n of elements contained in this tracer, default=0
+!                 This line is followed by n lines of this kind:
+!   <element> = <quantity>   where <element> is the element name (e.g., "N")
+!                            and <quantity> is the quantity of this element in one tracer unit.
+!                            Valid for <quantity> are real numbers or names of constants or code expressions, possibly containing auxiliary variables, that can be evaluated without knowing external parameters and tracer concentrations.
+! dimension=      how many instances of this tracer exist, e.g. a tracer named "cod" with dimension=2 exists as "cod_$cod" which is "cod_1" and "cod_2", default=0
+! gasName=        name of an auxiliary variable containing the concentration [mol/kg] of the dissolved gas in the surface cell, e.g. "co2" for tracer "dic". Default="" meaning it is the tracer concentration itself
+! initValue=      initial value, default="0.0", set "useInitValue" to 1 to use it
+! isActive=       1=active (default); 0=virtual tracer to check element conservation
+! isCombined=     1=combined tracer that accumulates several virtual tracers (isActive=false) in one variable, its contents are tracers rather than elements; 0=not (default)
+! isMixed=        1=mix with neighbour cells if negative, 0=do not, default=0, only applicable to tracers with vertLoc=WAT
+! isOutput=       1=occurs as output in model results (default); 0=only internal use
+! isInPorewater=  1=dissolved species which is also present in porewater, 0=not (particulate species) (default)
+! isPositive=     0=may be negative, 1=always positive (default)
+! isStiff=        0=not stiff (default); 1=stiff, use Patankar method if concentration declines; 2=stiff, always use modified Patankar method
+! massLimits=     semicolon-seperated string of (dimension-1) FORTRAN expressions for mass limits for stage-resolving models [mmol], default=""
+! molDiff=        molecular diffusivity in pore water [m2/s], use the name of a vertLoc=SED auxiliary variable, default="0.0"
+! opacity=        fortran formula for opacity [m2/mol] (for light limitation), default="0"
+! riverDep=       0=no river depositon of this tracer, 1=river deposition of this tracer (default)
+! schmidtNumber=  name of an auxiliary variable describing the Schmidt number [1] for gasses which flow through the surface, default="0"
+! solubility=     name of an auxiliary variable describing the solubility [mol/kg/Pa] for gasses which flow through the surface, default="0"
+! useInitValue=   1=use initValue as initial concentration, 0=do not (load initial concentration from file) (default)
+! verticalDistribution= Name of an auxiliary variable proportional to which the vertical distribution of the tracer is assumed. Relevant for vertLoc=FIS only. Default="1.0"
+! vertDiff=       fortran formula for vertical diffusivity [m2/s], default="0"
+! vertLoc=        WAT=everywhere in the water column (default), SED=in sediment only, SUR=at surface only, FIS=fish-type behaviour
+! vertSpeed=      fortran formula for vertical speed [m/day], default="0"
+! tracerAbove=    name of corresponding tracer in the compartment above, default="none" (e.g. "det" (in water column) if we are "benth_det")
+! tracerBelow=    name of corresponding tracer in the compartment below, default="none" (e.g. "nit" (in water column) if we are "surf_nit")
+! longname=       longname of the tracer (i.e. nitrate for a tracer named nit); used e.g. for the longname attributes in netCDF files
+! outputUnit=     unit of the tracer, which should be printed by the <unit> tag; e.g. for the unit attributes in netCDF files
+! stdname_prefix= prefix for a CF-convention standardname (inserted by the <standardname> tag), which is build by stdname_prefix+longname+stdname_suffix
+! stdname_suffix= suffix for a CF-convention standardname (inserted by the <standardname> tag), which is build by stdname_prefix+longname+stdname_suffix
+! comment=        e.g. "represents a certain kind of phytoplankton", default=""
+! *************************************************************************************
+name              = t_fuc
+description       = Fucus as nitrogen [mol N m-3]
+contents          = 1
+  N = 1
+initValue         = t_fuc_0
+useInitValue      = 1
+***********************
+name              = t_din
+description       = Dissolved inorganic nitrogen [mol N m-3]
+contents          = 1
+  N = 1
+initValue         = t_din_0
+useInitValue      = 1
+***********************

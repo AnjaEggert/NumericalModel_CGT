@@ -1,0 +1,97 @@
+! BioCGT constants file
+! *********************
+! properties of constants:
+!   name=           code name of constant
+!   description=    description including unit, default=""
+!   value=          value(s) separated by ";"
+!   dependsOn=      whether this constant varies in time and space, default="none", other possible values: "xyz", "xyzt"
+!   minval=         minimum value for variation (for inverse modelling)
+!   maxval=         maximum value for variation (for inverse modelling)
+!   varphase=       phase in which a parameter is allowed to vary (for inverse modelling) (default=1)
+!   comment=        comment, e.g. how certain this value is, literature,..., default=""
+!   unit=           unit of the constant
+! *************************************************************************************
+name        = box_vol
+value       = 1.5
+description = Water volume in box [m3]
+***********************
+name        = flow_rate
+value       = 1.8
+description = Flow rate of pump [m3/d]
+***********************
+name        = din_ext
+value       = 1
+dependsOn   = zt
+description = DIN concentration in Kiel fjord water pumped through KOB [mol N m-3]
+comment     = Time-dependent din values will be loaded from external file \\/bgc_forcing/din_ext.txt; here value=1 but will be replaced by values in txt-file
+***********************
+name        = gam_ext
+value       = 1
+dependsOn   = zt
+description = prescribed total Gammarus abundance in KOB [#]
+comment     = file \\/bgc_forcing/gam_ext.txt; here value=1 but will be replaced by values in txt-file
+***********************
+name        = t_din_0
+value       = 0.0005
+description = Initial DIN concentration at start of model period 1-jun-2019 [mol m-3]
+***********************
+name        = t_fuc_0
+value       = 0.010*20
+description = initial Fucus biomass as nitrogen at start of model period at 01.06.2019 [mol N m-3]
+comment     = assuming 20 individual plants per KOB
+***********************
+name        = km_din_fuc
+value       = 0.0002
+description = Half-saturation constant of DIN-assimilation of Fucus [mol N m-3]
+comment     = Wallentinus (1984): Fucus vesiculosus 7.3 umol l-1 = 0.0073\\but than Fucus does not grow, therefore here = 0.0002
+***********************
+name        = fuc_temp1
+value       = -0.071
+description = 1st term of temperature dependence of DIN assimilation of Fucus
+comment     = Term is X0 in quadratic regression model. Value estimated from growth-temperature \\data of Fucus vesiculosus in Graiff et al. (2015).
+***********************
+name        = fuc_temp2
+value       = 0.143
+description = 2nd term of temperature dependence of DIN assimilation of Fucus
+comment     = Term is X1 in quadratic regression model. Value estimated from growth-temperature \\data of Fucus vesiculosus in Graiff et al. (2015).
+***********************
+name        = fuc_temp3
+value       = -0.005
+description = 3rd term of temperature dependence of DIN assimilation of Fucus
+comment     = Term is X2 in quadratic regression model. Value estimated from growth-temperature \\data of Fucus vesiculosus in Graiff et al. (2015).
+***********************
+name        = fuc_graz_gam_0
+value       = 3.75E-6
+description = Maximal grazing rate of Gammarus on Fucus [mol N Fucus ind-1 d-1]
+comment     = Goecker & Kall 2003: 0.7 mg fm Fucus Ind-1 d-1 = 0.175 umol Ind-1 d-1\\but this unrealistic low consumption rate, therefore here: 15 mg fm Fucus Ind-1 d-1
+***********************
+name        = gam_graz_temp1
+value       = -1.393
+description = 1st term of temperature dependence of grazing of Gammarus
+comment     = Term is X0 of quadratic regression. Value estimated from grazing-temperature data of \\Gammarus in master thesis of Elisa Guelzow(2015).
+***********************
+name        = gam_graz_temp2
+value       = 0.273
+description = 2nd term of temperature dependence of grazing of Gammarus
+comment     = Term is X1 of quadratic regression. Value estimated from grazing-temperature data of \\Gammarus in master thesis of Elisa Guelzow(2015).
+***********************
+name        = gam_graz_temp3
+value       = -0.008
+description = 3rd term of temperature dependence of grazing of Gammaru
+comment     = Term is X2 of quadratic regression. Value estimated from grazing-temperature data of \\Gammarus in master thesis of Elisa Guelzow(2015).
+***********************
+name        = mu_0_fuc
+value       = 0.047
+description = maximal growth rate for Fucus [d-1]
+comment     = 4.7 % d-1 maximal growth rate of Fucus vesiculosus (Graiff et al. 2015)
+***********************
+name        = resp_0_fuc
+value       = 0.0017
+description = N-specific respiration rate of Fucus [d-1] at 0°C
+comment     = Markager & Sand-Jensen (1992): value determined for respiration of C of Fucus \\serratus from Denmark at 7°C: 0.0027 d-1
+***********************
+name        = q10
+value       = 0.0693
+description = van't Hoff's rule of temperature limitation
+comment     = q10_beta = 0.0693 K−1 is equivalent to Q10 = 2 of the van't Hoff's rule, i.e.  rate \\increases by factor 2 when temperature increases by 10°C
+***********************
