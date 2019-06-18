@@ -1,0 +1,101 @@
+! BioCGT auxiliaries file
+! ***********************
+! properties of auxiliaries:  (auxiliary values that are calculated)
+! name=               variable name in the code
+! description=        e.g. "absolute temperature [K]" default=""
+! temp1= ... temp9=   for calculating a temporary value which appears in the formula. e.g. temp1=no3*no3 temp2=no3limit*no3limit formula=temp1/(temp1+temp2), default=""
+! formula=            formula as it appears in the code
+! calcAfterProcesses= 1=calculate this auxiliary after all process rates are known, default=0
+! iterations=         how often this auxiliary variable is calculated in an iterative loop, default=0
+! iterInit=           the initial value in the iterative loop, default="0.0"
+! isOutput=           1=occurs as output in model results; 0=internal use only (default)
+! isUsedElsewhere=    1=make the value of this auxiliary accessible from outside the biological model (e.g. use a "diagnostic tracer" in MOM4); 0=internal use only (default)
+! isZGradient=        1=is a vertical gradient of a tracer, 0=is not (default). If 1, "formula" must be the name of the tracer, which must have vertLoc=WAT. isZGradient=1 requires vertLoc=WAT.
+! isZIntegral=        1=is a vertical integral (of value times density) of a tracer or an auxiliary variable, 0=is not (default). If 1 "formula" must be the name of the tracer, which must have vertLoc=WAT. isZIntegral=1 requires vertLoc=SED.
+! vertLoc=            WAT=z-dependent (default), SED=in the bottom cell only, SUR=in the surface cell only
+! comment=            e.g. a literature reference, default=""
+! unit=               unit of the auxiliary variable
+!
+! All entries with the same value of calcAfterProcesses are calculated in given order.
+! *************************************************************************************
+name               = day
+formula            = cgt_dayofyear
+description        = Julian day
+isOutput           = 1
+***********************
+name               = phi_temp_fv
+formula            = fv_temp1+fv_temp2*cgt_temp+fv_temp3*cgt_temp*cgt_temp
+description        = temperature factor Fucus assimilation [0,1]
+comment            = Quadratic regression model: X0+X1*temp+X2*temp^2
+isOutput           = 1
+***********************
+name               = phi_temp_fe
+formula            = fe_temp1+fe_temp2*cgt_temp+fe_temp3*cgt_temp*cgt_temp
+description        = temperature factor Fucus assimilation [0,1]
+isOutput           = 1
+***********************
+name               = phi_din_fv
+formula            = t_din*t_din/(km_din_fv*km_din_fv+t_din*t_din)
+description        = Limitation function of DIN assimilation by Fucus [1]
+comment            = Michaelis-Menten formula with squared arguments
+isOutput           = 1
+***********************
+name               = phi_din_fe
+formula            = t_din*t_din/(km_din_fe*km_din_fe+t_din*t_din)
+description        = Limitation function of DIN assimilation by Fucus [1]
+isOutput           = 1
+***********************
+name               = gam_abun
+formula            = gam_ext/box_vol
+description        = Gammarus abundance [ind m-3]
+isOutput           = 1
+***********************
+name               = gam_par_abun
+formula            = gam_par_ext/box_vol
+description        = Gammarus abundance [ind m-3]
+isOutput           = 1
+***********************
+name               = phi_temp_graz_gam
+formula            = gam_graz_temp1+gam_graz_temp2*cgt_temp+gam_graz_temp3*cgt_temp*cgt_temp
+description        = temperature factor Gammarus grazing [0,1]
+comment            = master thesis Elisa Gulzow (2015)
+isOutput           = 1
+***********************
+name               = phi_temp_graz_gam_par
+formula            = gam_par_graz_temp1+gam_par_graz_temp2*cgt_temp+gam_par_graz_temp3*cgt_temp*cgt_temp
+description        = temperature factor Gammarus grazing [0,1]
+isOutput           = 1
+***********************
+name               = resp_temp_fv
+formula            = resp_0_fv*exp(q10*cgt_temp)
+description        = Temperature-dependent N respiration of Fucus [d-1]
+comment            = Respiration rate with including temperature effect
+isOutput           = 1
+***********************
+name               = resp_temp_fe
+formula            = resp_0_fe*exp(q10*cgt_temp)
+description        = Temperature-dependent N respiration of Fucus [d-1]
+isOutput           = 1
+***********************
+name               = mu_fv
+formula            = mu_0_fv*cgt_light
+description        = Light-dependent Fucus growth
+comment            = Only night/day pattern
+isOutput           = 1
+***********************
+name               = mu_fe
+formula            = mu_0_fe*cgt_light
+description        = Light-dependent Fucus growth
+isOutput           = 1
+***********************
+name               = food_total_gam
+formula            = max(fp_gam_graz_fv*t_fv+fp_gam_graz_fe*t_fe,epsilon)
+description        = Total food as N for grazers [mol N m-3]
+comment            = Grazers feed on either Fuc vesiculosus or Fuc evansecens with specific preferences
+isOutput           = 1
+***********************
+name               = food_total_gam_par
+formula            = max(fp_gam_par_graz_fv*t_fv+fp_gam_par_graz_fe*t_fe,epsilon)
+description        = Total food as N for grazers [mol N m-3]
+isOutput           = 1
+***********************
