@@ -90,21 +90,24 @@ value       = -0.005
 description = 3rd term of temperature dependence of DIN assimilation of Fucus
 ***********************
 name        = fv_graz_gam_0
-value       = 3.75E-6
+value       = 1.25E-6
 description = Maximal grazing rate of Gammarus on Fucus [mol N Fucus ind-1 d-1]
-comment     = Goecker & Kall 2003: 0.7 mg fm Fucus Ind-1 d-1 = 0.175 umol Ind-1 d-1\\but this unrealistic low consumption rate, therefore here: 15 mg fm Fucus Ind-1 d-1
+comment     = Experiment 5 mg fm Fucus ves. Ind-1 d-1
 ***********************
 name        = fe_graz_gam_0
-value       = 3.75E-6
+value       = 1.00E-6
 description = Maximal grazing rate of Gammarus on Fucus [mol N Fucus ind-1 d-1]
+comment     = Experiment: 4 mg Fuc evan Ind-1 d-1
 ***********************
 name        = fv_graz_gam_par_0
-value       = 3.75E-6
+value       = 1.00E-6
 description = Maximal grazing rate of Gammarus on Fucus [mol N Fucus ind-1 d-1]
+comment     = Experiment: 4 mg Fuc ves. Ind-1 d-1
 ***********************
 name        = fe_graz_gam_par_0
-value       = 3.75E-6
+value       = 1.25E-6
 description = Maximal grazing rate of Gammarus on Fucus [mol N Fucus ind-1 d-1]
+comment     = Experiment: 5 mg Fuc. evan. Ind-1 d-1
 ***********************
 name        = gam_graz_temp1
 value       = -1.393

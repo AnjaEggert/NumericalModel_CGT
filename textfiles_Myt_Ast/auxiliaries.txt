@@ -1,0 +1,46 @@
+! BioCGT auxiliaries file
+! ***********************
+! properties of auxiliaries:  (auxiliary values that are calculated)
+! name=               variable name in the code
+! description=        e.g. "absolute temperature [K]" default=""
+! temp1= ... temp9=   for calculating a temporary value which appears in the formula. e.g. temp1=no3*no3 temp2=no3limit*no3limit formula=temp1/(temp1+temp2), default=""
+! formula=            formula as it appears in the code
+! calcAfterProcesses= 1=calculate this auxiliary after all process rates are known, default=0
+! iterations=         how often this auxiliary variable is calculated in an iterative loop, default=0
+! iterInit=           the initial value in the iterative loop, default="0.0"
+! isOutput=           1=occurs as output in model results; 0=internal use only (default)
+! isUsedElsewhere=    1=make the value of this auxiliary accessible from outside the biological model (e.g. use a "diagnostic tracer" in MOM4); 0=internal use only (default)
+! isZGradient=        1=is a vertical gradient of a tracer, 0=is not (default). If 1, "formula" must be the name of the tracer, which must have vertLoc=WAT. isZGradient=1 requires vertLoc=WAT.
+! isZIntegral=        1=is a vertical integral (of value times density) of a tracer or an auxiliary variable, 0=is not (default). If 1 "formula" must be the name of the tracer, which must have vertLoc=WAT. isZIntegral=1 requires vertLoc=SED.
+! vertLoc=            WAT=z-dependent (default), SED=in the bottom cell only, SUR=in the surface cell only
+! comment=            e.g. a literature reference, default=""
+! unit=               unit of the auxiliary variable
+!
+! All entries with the same value of calcAfterProcesses are calculated in given order.
+! *************************************************************************************
+name               = day
+formula            = cgt_dayofyear
+description        = Julian day
+isOutput           = 1
+***********************
+name               = phi_temp_ast
+formula            = ast_temp1+ast_temp2*cgt_temp+ast_temp3*cgt_temp*cgt_temp
+description        = temperature factor Asterias feeding [0,1]
+comment            = Quadratic regression model: X0+X1*temp+X2*temp^2
+isOutput           = 1
+***********************
+name               = phi_temp_myt
+formula            = myt_temp1+myt_temp2*cgt_temp+myt_temp3*cgt_temp*cgt_temp
+description        = temperature factor Mytilus filtration rate [0,1]
+isOutput           = 1
+***********************
+name               = phi_salt_ast
+formula            = ast_sal1+ast_sal2*cgt_sali+ast_sal3*cgt_sali*cgt_sali
+description        = salinity factor Asterias feeding [0,1]
+isOutput           = 1
+***********************
+name               = phi_salt_myt
+formula            = myt_sal1+myt_sal2*cgt_temp+myt_sal3*cgt_temp*cgt_temp
+description        = salinity factor Mytilus filtration rate [0,1]
+isOutput           = 1
+***********************

@@ -1,0 +1,7 @@
+! BioCGT elements file
+! ********************
+! properties of elements:
+!   name=           internal name used, e.g. "N"
+!   description=    e.g. "nitrogen"
+!   comment=        any comments
+! *************************************************************************************
